@@ -4,6 +4,8 @@ import {
   requestGetFavorites,
 } from "@/apis";
 import Banner from "@/components/Banner/Banner";
+import AppInfoModal from "@/components/BottomUpModal/AppInfoModal";
+import BottomUpModal from "@/components/BottomUpModal/BottomUpModal";
 import Carousel from "@/components/Carousel/Carosel";
 import Layout from "@/components/Layout/Layout";
 import DAppItem from "@/components/List/DAppItem/DAppItem";
@@ -21,6 +23,8 @@ const Discovery = () => {
 
   // States
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [bottomUpItem, setBottomUpItem] = useState<DAppItem>();
   const [bannerItems, setBannerItems] = useState<BannerItem[]>([]);
   const [dappItems, setDAppItems] = useState<DAppItem[]>([]);
   const [favoriteItems, setFavoriteItems] = useState<FavoriteItem[]>([]);
@@ -70,6 +74,11 @@ const Discovery = () => {
       () => {}
     );
   };
+
+  const onClickDApp = (item: DAppItem) => {
+    setIsOpen(true);
+    setBottomUpItem(item);
+  };
   useEffect(() => {
     initialize();
   }, []);
@@ -106,8 +115,16 @@ const Discovery = () => {
       />
       <List
         data={dappItems}
-        children={(item) => <DAppItem item={item} onClick={() => {}} />}
+        children={(item) => (
+          <DAppItem item={item} onClick={(item) => onClickDApp(item)} />
+        )}
       />
+      <BottomUpModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <AppInfoModal
+          dappItem={bottomUpItem}
+          onClose={() => setIsOpen(false)}
+        />
+      </BottomUpModal>
     </Layout>
   );
 };

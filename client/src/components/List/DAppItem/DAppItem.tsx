@@ -2,7 +2,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 interface DAppItemProps {
   item: DAppItem;
-  onClick?: () => void;
+  onClick?: (item: DAppItem) => void;
 }
 
 const DAppItem = ({ item, onClick }: DAppItemProps) => {
@@ -14,7 +14,9 @@ const DAppItem = ({ item, onClick }: DAppItemProps) => {
   return (
     <div
       className="flex items-center p-4 border rounded-lg hover:bg-gray-50"
-      onClick={onClick}
+      onClick={() => {
+        if (onClick) onClick(item);
+      }}
     >
       <img
         src={localizedDApp.image_url}
