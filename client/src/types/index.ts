@@ -55,3 +55,15 @@ type FavoriteItem = {
   image_url: string;
   service_url: string;
 };
+
+// 플랫폼 관련 타입
+type Platform = "ios" | "android" | "web" | "unknown";
+
+type PlatformInfo = {
+  platform: Platform;
+  isIOS: boolean;
+  isAndroid: boolean;
+  isWeb: boolean;
+  isMobile: boolean;
+  version?: string;
+};

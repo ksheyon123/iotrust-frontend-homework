@@ -14,11 +14,12 @@ import List from "@/components/List/List";
 import Title from "@/components/Title/Title";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useModal } from "@/contexts/ModalContext";
+import { detectPlatform } from "@/utils";
 import { useEffect, useState } from "react";
 
 const Discovery = () => {
   // Custom Hooks
-  const { lngSets } = useLanguage();
+  const { lngSets, currentLanguage } = useLanguage();
   const { showModal } = useModal();
 
   // States
@@ -28,6 +29,76 @@ const Discovery = () => {
   const [bannerItems, setBannerItems] = useState<BannerItem[]>([]);
   const [dappItems, setDAppItems] = useState<DAppItem[]>([]);
   const [favoriteItems, setFavoriteItems] = useState<FavoriteItem[]>([]);
+
+  // condition에 따른 DApp 필터링 함수
+  const filterDAppsByCondition = (
+    dapps: DAppItem[],
+    currentLanguage: string
+  ): DAppItem[] => {
+    const currentPlatform = detectPlatform();
+    const currentEnv = process.env.NODE_ENV || "development";
+
+    return dapps.filter((dapp) => {
+      const languageData = dapp[currentLanguage as keyof DAppItem];
+      if (!languageData || !languageData.condition) return true;
+
+      const conditions = languageData.condition;
+
+      // condition이 빈 배열인 경우 항상 표시
+      if (conditions.length === 0) return true;
+
+      // 플랫폼 조건 확인
+      const platformConditions = conditions.filter(
+        (cond) => cond === "ios" || cond === "android" || cond === "web"
+      );
+
+      // 언어 조건 확인
+      const languageConditions = conditions.filter(
+        (cond) => cond === "ko" || cond === "en"
+      );
+
+      // 환경 조건 확인
+      const envConditions = conditions.filter(
+        (cond) => cond === "dev" || cond === "stage" || cond === "prod"
+      );
+
+      let platformMatch = true;
+      let languageMatch = true;
+      let envMatch = true;
+
+      // 플랫폼 조건이 있는 경우 확인
+      if (platformConditions.length > 0) {
+        const validPlatforms = ["ios", "android", "web"] as const;
+        platformMatch =
+          validPlatforms.includes(currentPlatform as any) &&
+          platformConditions.includes(currentPlatform as any);
+      }
+
+      // 언어 조건이 있는 경우 확인
+      if (languageConditions.length > 0) {
+        const validLanguages = ["ko", "en"] as const;
+        languageMatch =
+          validLanguages.includes(currentLanguage as any) &&
+          languageConditions.includes(currentLanguage as any);
+      }
+
+      // 환경 조건이 있는 경우 확인
+      if (envConditions.length > 0) {
+        const envMapping: { [key: string]: string } = {
+          development: "dev",
+          staging: "stage",
+          production: "prod",
+        };
+        const mappedEnv = envMapping[currentEnv] || "dev";
+        const validEnvs = ["dev", "stage", "prod"] as const;
+        envMatch =
+          validEnvs.includes(mappedEnv as any) &&
+          envConditions.includes(mappedEnv as any);
+      }
+
+      return platformMatch && languageMatch && envMatch;
+    });
+  };
 
   const initialize = async () => {
     try {
@@ -85,6 +156,9 @@ const Discovery = () => {
 
   if (!isLoaded) return null;
 
+  // condition에 따라 필터링된 DApp 목록
+  const filteredDAppItems = filterDAppsByCondition(dappItems, currentLanguage);
+
   return (
     <Layout>
       <div>
@@ -114,7 +188,7 @@ const Discovery = () => {
         children={(d) => <div>{d.title}</div>}
       />
       <List
-        data={dappItems}
+        data={filteredDAppItems}
         children={(item) => (
           <DAppItem item={item} onClick={(item) => onClickDApp(item)} />
         )}

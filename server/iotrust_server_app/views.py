@@ -146,7 +146,7 @@ def dapp_list(request):
                 "service_url": "https://portal.astar.network/",
                 "description": "아스타포탈은 Astar Network에서 제공하는 모든 것을 사용하기 위한 Astar Network의 공식 애플리케이션입니다.",
                 "networks": ["Astar"],
-                "condition": ["ko", "en", "dev", "stage"]
+                "condition": ["dev", "stage"]
             },
             "en": {
                 "name": "Astar Portal",
@@ -154,7 +154,7 @@ def dapp_list(request):
                 "service_url": "https://portal.astar.network/",
                 "description": "Astar Portal is the official Astar Network application for using everything that Astar Network offers.",
                 "networks": ["Astar"],
-                "condition": ["ko", "en", "dev", "stage"]
+                "condition": ["dev", "stage"]
             }
         },
         {
