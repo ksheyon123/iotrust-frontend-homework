@@ -231,14 +231,22 @@ i18n 두 번째 포맷으로 banner_list 와 dapp_list를 변경합니다.
 
 # 3.6 Favorite 적용
 
-## DAppItem 기준 즐겨찾기 아이콘 추가
+## 3.6.1 DAppItem 기준 즐겨찾기 아이콘 추가
 
 ```
 FavoriteItem 우측에 노란색 별표를 추가합니다. 즐겨찾기 추가 삭제에 사용되는 버튼입니다.
 ```
 
-## Favorite의 Modal 컴포넌트 코드 작성 요청
+## 3.6.2 Favorite의 Modal 컴포넌트 코드 작성 요청
 
 ```
 Modal 컴포넌트를 생성합니다. 이때, 해당 모달 컴포넌트는 ModalContext를 통해 호출하며 해당 컨텍스트는 onReject, onConfirm 함수를 받습니다.
+```
+
+# 3.7 DApp 적용
+
+## 3.7.1 BottomUpModal 내부 UI 코드 작성
+
+```
+(동영상 이미지 첨부) 해당 UI 만들어줘. 이때, DAppItem 타입을 사용해야합니다.
 ```
