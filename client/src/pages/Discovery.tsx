@@ -22,7 +22,6 @@ const Discovery = () => {
         requestGetDApps(),
       ]);
       if (banners) {
-        console.log(banners);
         // 새로운 API 응답 형식에서 ko 배열을 사용
         setBannerItems(banners || []);
       }
@@ -44,11 +43,18 @@ const Discovery = () => {
 
   return (
     <Layout>
-      <Carousel>
-        {bannerItems.map((item) => {
-          return <Banner {...item} />;
-        })}
-      </Carousel>
+      <div>
+        <Carousel>
+          {bannerItems.map((item) => {
+            return <Banner {...item} />;
+          })}
+        </Carousel>
+      </div>
+      <Title<{ title: string }>
+        data={{ title: lngSets.dapp_favorite_title }}
+        children={(d) => <div>{d.title}</div>}
+      />
+      <List data={dappItems} children={(item) => <ListItem {...item} />} />
       <Title<{ title: string }>
         data={{ title: lngSets.dapp_favorite_title }}
         children={(d) => <div>{d.title}</div>}

@@ -19,15 +19,15 @@ type BannerItem = {
     banner_name: string;
     banner_url: string;
     banner_link: string;
-    banner_desc: string;
-    banner_btn_text: string;
+    banner_desc?: string;
+    banner_btn_text?: string;
   };
   en: {
     banner_name: string;
     banner_url: string;
     banner_link: string;
-    banner_desc: string;
-    banner_btn_text: string;
+    banner_desc?: string;
+    banner_btn_text?: string;
   };
 };
 

@@ -1,28 +1,40 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import Button from "../Button/Button";
 
 const Banner = (item: BannerItem) => {
   const { currentLanguage } = useLanguage();
 
   // 현재 언어에 맞는 배너 데이터 선택
   const localizedBanner = item[currentLanguage];
+  const hasButton = !!item[currentLanguage].banner_btn_text;
+
+  const onClickBanner = () => {
+    if (!hasButton) window.open(localizedBanner.banner_link);
+  };
 
   return (
-    <div className="relative">
-      <img
-        src={localizedBanner.banner_url}
-        alt={localizedBanner.banner_desc || "배너 이미지"}
-        className="w-full h-auto"
-      />
+    <div
+      className="relative w-full h-64 bg-cover bg-center bg-no-repeat rounded-lg overflow-hidden"
+      style={{ backgroundImage: `url(${localizedBanner.banner_url})` }}
+      onClick={onClickBanner}
+    >
+      {/* Description - 좌측 상단 */}
       {localizedBanner.banner_desc && (
-        <p className="mt-2 text-gray-600">{localizedBanner.banner_desc}</p>
+        <div className="absolute top-4 left-4 z-10">
+          <p className="text-white text-xl font-medium max-w-md leading-relaxed">
+            {localizedBanner.banner_desc}
+          </p>
+        </div>
       )}
+
+      {/* Button - 좌측 하단 */}
       {localizedBanner.banner_btn_text && (
-        <a
-          href={localizedBanner.banner_link}
-          className="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        <Button
+          className="absolute bottom-4 left-4 z-10"
+          onClick={() => window.open(localizedBanner.banner_link)}
         >
           {localizedBanner.banner_btn_text}
-        </a>
+        </Button>
       )}
     </div>
   );

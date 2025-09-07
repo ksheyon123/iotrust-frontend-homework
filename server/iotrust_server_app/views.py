@@ -52,15 +52,11 @@ def banner_list(request):
                 "banner_name": "캠페인 마포 에어드랍",
                 "banner_url": f"{settings.IMAGE_BASE_URL}banner_mapo_kr.png",
                 "banner_link": "https://store-kr.dcentwallet.com/blogs/post/tap-that-drop-with-map-protocol",
-                "banner_desc": "특별 프로모션 이벤트",
-                "banner_btn_text": "자세히 보기"
             },
             "en": {
                 "banner_name": "campaign_mapo_airdrop",
                 "banner_url": f"{settings.IMAGE_BASE_URL}banner_mapo_en.png",
                 "banner_link": "https://store.dcentwallet.com/blogs/post/tap-that-drop-with-map-protocol",
-                "banner_desc": "Special Promotion Event",
-                "banner_btn_text": "Learn More"
             }
         },
         {
@@ -97,14 +93,7 @@ def banner_list(request):
         }
     ]
     
-    # 다국어 형식으로 응답 구조 변경
-    response_data = {
-        'status': 200,
-        'code': 1000,
-        'data':banner_data
-    }
-    
-    return Response(response_data, status=200)
+    return ApiResponseWrapper.success(data=banner_data, code=1000, status_code=200)
 
 
 @api_view(['GET'])
@@ -278,14 +267,7 @@ def dapp_list(request):
         }
     ]
     
-    # 다국어 형식으로 응답 구조 변경
-    response_data = {
-        'status': 200,
-        'code': 1000,
-        'data': dapp_data
-    }
-    
-    return Response(response_data, status=200)
+    return ApiResponseWrapper.success(data=dapp_data, code=1000, status_code=200)
 
 
 @api_view(['GET'])
@@ -296,34 +278,21 @@ def favorite_list(request):
     # 샘플 즐겨찾기 데이터
     favorite_data = [
         {
-            "image_url": "https://example.com/favorite1-logo.png",
-            "service_url": "https://favorite1.example.com",
-            "language": {
-                "ko": "즐겨찾기 서비스 1",
-                "en": "Favorite Service 1"
-            },
-            "networks": ["ethereum", "polygon"],
-            "condition": {
-                "visible_language": ["ko", "en"],
-                "visible_env": ["dev", "stage", "prod"]
-            }
+            "title" : "OpenSea, the largest NFT marketplace",
+            "image_url": f"{settings.IMAGE_BASE_URL}icon_opensea.png",
+            "service_url": "https://opensea.io",
         },
         {
-            "image_url": "https://example.com/favorite2-logo.png",
-            "service_url": "https://favorite2.example.com",
-            "language": {
-                "ko": "즐겨찾기 서비스 2",
-                "en": "Favorite Service 2"
-            },
-            "networks": ["bsc", "avalanche"],
-            "condition": {
-                "visible_language": ["en"],
-                "visible_env": ["dev", "stage"]
-            }
+           "service_name" : "MoonPay",
+            "image_url": f"{settings.IMAGE_BASE_URL}icon_moonpay.png",
+            "service_url": "https://buy.moonpay.com/v2/buy",
+        },
+        {
+            "service_name" : "Rarible - NFT Marketplace for Brands, Communities and Traders",
+            "image_url": f"{settings.IMAGE_BASE_URL}icon_rarible.png",
+            "service_url": "https://rarible.com/",
         }
     ]
-    
-    return ApiResponseWrapper.success(
-        data=favorite_data,
-        code=1000
-    )
+
+    return ApiResponseWrapper.success(data=favorite_data, code=1000, status_code=200)
+
