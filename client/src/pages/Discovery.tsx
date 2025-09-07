@@ -22,10 +22,13 @@ const Discovery = () => {
         requestGetDApps(),
       ]);
       if (banners) {
-        setBannerItems(banners);
+        console.log(banners);
+        // 새로운 API 응답 형식에서 ko 배열을 사용
+        setBannerItems(banners || []);
       }
       if (dapps) {
-        setDAppItems(dapps);
+        // 새로운 API 응답 형식에서 ko 배열을 사용
+        setDAppItems(dapps || []);
       }
     } catch (e) {
       throw e;

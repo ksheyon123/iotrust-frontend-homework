@@ -15,17 +15,37 @@ type DefaultLngSets = {
 };
 
 type BannerItem = {
-  banner_url: LanguageObject;
-  banner_link: LanguageObject;
-  banner_desc?: LanguageObject;
-  banner_btn_text?: LanguageObject;
+  ko: {
+    banner_name: string;
+    banner_url: string;
+    banner_link: string;
+    banner_desc: string;
+    banner_btn_text: string;
+  };
+  en: {
+    banner_name: string;
+    banner_url: string;
+    banner_link: string;
+    banner_desc: string;
+    banner_btn_text: string;
+  };
 };
 
 type DAppItem = {
-  name: string;
-  image_url: string;
-  service_url: string;
-  description: LanguageObject;
-  networks: string[];
-  condition: string[];
+  ko: {
+    name: string;
+    image_url: string;
+    service_url: string;
+    description: string;
+    networks: string[];
+    condition: string[];
+  };
+  en: {
+    name: string;
+    image_url: string;
+    service_url: string;
+    description: string;
+    networks: string[];
+    condition: string[];
+  };
 };
