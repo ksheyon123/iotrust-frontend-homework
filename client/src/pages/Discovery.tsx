@@ -11,10 +11,15 @@ import FavoriteItem from "@/components/List/FavoriteItem/FavoriteItem";
 import List from "@/components/List/List";
 import Title from "@/components/Title/Title";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useModal } from "@/contexts/ModalContext";
 import { useEffect, useState } from "react";
 
 const Discovery = () => {
+  // Custom Hooks
   const { lngSets } = useLanguage();
+  const { showModal } = useModal();
+
+  // States
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [bannerItems, setBannerItems] = useState<BannerItem[]>([]);
   const [dappItems, setDAppItems] = useState<DAppItem[]>([]);
@@ -47,9 +52,22 @@ const Discovery = () => {
     }
   };
 
-  const handleFavoriteToggle = (item: FavoriteItem) => {
-    setFavoriteItems((prevItems) =>
-      prevItems.filter((favItem) => favItem.service_url !== item.service_url)
+  const onClickFavorite = (item: FavoriteItem) => {
+    showModal(
+      {
+        title: `${lngSets.dapp_favorite_title} ${lngSets.dapp_favorite_delete}`,
+        message: lngSets.dapp_favorite_delete_confirm,
+        confirmText: lngSets.button_confirm,
+        cancelText: lngSets.button_cancel,
+      },
+      () => {
+        setFavoriteItems((prevItems) =>
+          prevItems.filter(
+            (favItem) => favItem.service_url !== item.service_url
+          )
+        );
+      },
+      () => {}
     );
   };
   useEffect(() => {
@@ -77,7 +95,7 @@ const Discovery = () => {
           <FavoriteItem
             item={item}
             onClick={() => {}}
-            onFavoriteToggle={() => handleFavoriteToggle(item)}
+            onClickFavorite={(item) => onClickFavorite(item)}
             isFavorited={true}
           />
         )}
