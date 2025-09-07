@@ -157,3 +157,74 @@ URL: https://bwpm.io/
 
 전달한 목록 dapp_list API 에 적용해줘
 ```
+
+# 3.5 i18n 적용
+
+## 3.5.1 i18n 데이터 포맷 검토 요청
+
+```
+{
+  "status": 200,
+  "code": 1000,
+  "data": [
+    {
+      "ko": {
+        "banner_url": "...",
+        "banner_link": "...",
+        "banner_desc": "...",
+        "banner_btn_text": "..."
+      },
+      "en": {
+        "banner_url": "...",
+        "banner_link": "...",
+        "banner_desc": "...",
+        "banner_btn_text": "..."
+      }
+    }
+  ]
+}
+
+이 포맷과
+
+{
+  "data": [
+    {
+      "id": "banner_1",
+      "banner_url": "...",
+      "banner_desc": "...",
+      "translations": {
+        "ko": { "banner_desc": "한국어 설명" },
+        "en": { "banner_desc": "English description" }
+      }
+    }
+  ]
+}
+
+두 포맷을 비교합니다.
+```
+
+## 3.5.2 i18n 두 번째 포맷으로 banner_list 와 dapp_list를 변경 요청
+
+```
+i18n 두 번째 포맷으로 banner_list 와 dapp_list를 변경합니다.
+```
+
+## 3.5.3 첫 번쨰 포맷으로 재변경
+
+```
+현재 서버에서 사용하는 응답 형식을
+  {
+    "ko" : {
+        "banner_name" : "캠페인 마포 에어드랍",
+        "banner_url": f"{settings.IMAGE_BASE_URL}banner_mapo_kr.png",
+        ...
+    },
+    "en" : {
+        "banner_name" : "campaign_mapo_airdrop",
+        "banner_url" : f"{settings.IMAGE_BASE_URL}banner_mapo_en.png"
+        ...
+    }
+  }
+
+이 형태로 변경합니다. 또한, Client의 관련 코드를 변경합니다.
+```
