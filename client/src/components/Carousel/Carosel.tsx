@@ -11,8 +11,7 @@ const Carousel: React.FC<CarouselProps> = ({
   timer = 0,
   className = "",
 }) => {
-  const [items, setItems] = useState(children);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1); // 첫 번째 복사본 다음부터 시작
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [translateX, setTranslateX] = useState(0);
@@ -22,45 +21,61 @@ const Carousel: React.FC<CarouselProps> = ({
 
   const totalItems = children.length;
 
-  // 실제 원본 배열에서의 인덱스 계산
+  // 앞뒤로 복사본을 추가한 전체 아이템 배열 생성
+  const extendedItems = [
+    children[children.length - 1], // 마지막 아이템을 앞에 복사
+    ...children, // 원본 아이템들
+    children[0], // 첫 번째 아이템을 뒤에 복사
+  ];
+
+  // 현재 표시되는 슬라이드의 원본 인덱스 계산
   const getOriginalIndex = useCallback(() => {
-    const firstItem = items[0];
-    return children.findIndex((child) => child === firstItem);
-  }, [items, children]);
+    if (currentIndex === 0) return totalItems - 1; // 앞쪽 복사본
+    if (currentIndex === totalItems + 1) return 0; // 뒤쪽 복사본
+    return currentIndex - 1; // 일반적인 경우
+  }, [currentIndex, totalItems]);
 
   // 다음 슬라이드로 이동 (오른쪽으로 스와이프)
   const goToNext = useCallback(() => {
     if (isAnimating) return;
 
     setIsAnimating(true);
-    setCurrentIndex(1);
+    const nextIndex = currentIndex + 1;
+    setCurrentIndex(nextIndex);
 
-    // 300ms 후 배열 재배열
-    setTimeout(() => {
-      setItems((prev) => [...prev.slice(1), prev[0]]);
-      setCurrentIndex(0);
-      setIsAnimating(false);
-    }, 300);
-  }, [isAnimating]);
+    // 마지막 복사본에 도달했을 때 첫 번째 원본으로 점프
+    if (nextIndex === totalItems + 1) {
+      setTimeout(() => {
+        setCurrentIndex(1);
+        setIsAnimating(false);
+      }, 300);
+    } else {
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 300);
+    }
+  }, [isAnimating, currentIndex, totalItems]);
 
   // 이전 슬라이드로 이동 (왼쪽으로 스와이프)
   const goToPrev = useCallback(() => {
     if (isAnimating) return;
 
     setIsAnimating(true);
+    const prevIndex = currentIndex - 1;
+    setCurrentIndex(prevIndex);
 
-    // 배열을 먼저 재배열
-    setItems((prev) => [prev[prev.length - 1], ...prev.slice(0, -1)]);
-    setCurrentIndex(-1);
-
-    // 다음 프레임에서 애니메이션 시작
-    requestAnimationFrame(() => {
-      setCurrentIndex(0);
+    // 첫 번째 복사본에 도달했을 때 마지막 원본으로 점프
+    if (prevIndex === 0) {
+      setTimeout(() => {
+        setCurrentIndex(totalItems);
+        setIsAnimating(false);
+      }, 300);
+    } else {
       setTimeout(() => {
         setIsAnimating(false);
       }, 300);
-    });
-  }, [isAnimating]);
+    }
+  }, [isAnimating, currentIndex, totalItems]);
 
   // 타이머 관련 함수들
   const startTimer = useCallback(() => {
@@ -171,9 +186,9 @@ const Carousel: React.FC<CarouselProps> = ({
     }
   };
 
-  // children이 변경되면 items 업데이트
+  // children이 변경되면 currentIndex를 초기화
   useEffect(() => {
-    setItems(children);
+    setCurrentIndex(1); // 첫 번째 원본 아이템으로 초기화
   }, [children]);
 
   // 타이머 효과
@@ -235,9 +250,9 @@ const Carousel: React.FC<CarouselProps> = ({
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
       >
-        {items.map((child, index) => (
+        {extendedItems.map((child, index) => (
           <div
-            key={`slide-${getOriginalIndex()}-${index}`}
+            key={`slide-${index}`}
             className="flex-shrink-0 w-full h-full flex items-center justify-center"
           >
             {child}
@@ -247,13 +262,13 @@ const Carousel: React.FC<CarouselProps> = ({
 
       {/* 인덱스 표시 */}
       <div className="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm font-medium">
-        {displayIndex + 1} / {totalItems}
+        {getOriginalIndex() + 1} / {totalItems}
       </div>
 
       {/* 디버그 정보 (개발용) */}
       <div className="absolute top-4 left-4 bg-white bg-opacity-80 text-black px-2 py-1 rounded text-xs">
-        Dragging: {isDragging ? "Yes" : "No"} | Animating:{" "}
-        {isAnimating ? "Yes" : "No"}
+        Current: {currentIndex} | Original: {getOriginalIndex()} | Dragging:{" "}
+        {isDragging ? "Yes" : "No"} | Animating: {isAnimating ? "Yes" : "No"}
       </div>
     </div>
   );
