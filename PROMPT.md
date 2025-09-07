@@ -76,3 +76,9 @@ Server 쪽에 DjangoRestFramwork 환경 구축합니다. App 이름은 iotrust-s
 
 Python 환경은 conda activate iotrust로 사용합니다.
 ```
+
+## 3.2 API SPEC 기준 코드 작성 요청
+
+```
+SERVICE_API_SPEC 맞춰서 작업해줘
+```
