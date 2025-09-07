@@ -2,6 +2,7 @@ import BottomUpModalExample from "@/components/BottomUpModal/BottomUpModalExampl
 import ButtonExample from "@/components/Button/ButtonExample";
 import CaroselExample from "@/components/Carousel/CarouselExample";
 import ListExample from "@/components/List/ListExample";
+import ModalExample from "@/components/Modal/ModalExample";
 
 const Test = () => {
   return (
@@ -10,6 +11,7 @@ const Test = () => {
       <ListExample />
       <ButtonExample />
       <BottomUpModalExample />
+      <ModalExample />
     </>
   );
 };

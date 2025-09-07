@@ -1,13 +1,14 @@
 interface FavoriteItemProps {
   item: FavoriteItem;
   onClick?: () => void;
-  onFavoriteToggle?: () => void;
+  onClickFavorite?: (item: FavoriteItem) => void;
   isFavorited?: boolean;
 }
 
 const FavoriteItem = ({
   item,
   onClick,
+  onClickFavorite,
   isFavorited = true,
 }: FavoriteItemProps) => {
   return (
@@ -25,7 +26,7 @@ const FavoriteItem = ({
         <div>{item.service_url}</div>
       </div>
       <button
-        onClick={() => {}}
+        onClick={() => onClickFavorite && onClickFavorite(item)}
         className="ml-2 p-2 hover:bg-gray-100 rounded-full transition-colors"
         title={isFavorited ? "즐겨찾기에서 제거" : "즐겨찾기에 추가"}
       >
