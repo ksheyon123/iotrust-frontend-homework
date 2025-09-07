@@ -254,5 +254,5 @@ Modal 컴포넌트를 생성합니다. 이때, 해당 모달 컴포넌트는 Mod
 # 3.7.2 DApp filter 코드 요청
 
 ```
-utils에 ios/android 구분 로직을 작성합니다. Discovery 코드의 dapps 에서 condition에 따라서 보여지는 목록이 다릅니다. condition이 빈배열인 경우 보여지는 조건이 없고, ios인 경우 ios에서 "en", "ios"이면 해당 조건에서 "dev", "stage"이면 해당조건에서만 나타납니다.
+utils에 ios/android 구분 로직을 작성합니다. Discovery 코드에 dapps 에서 condition에 따라서 보여지는 목록이 다릅니다. condition이 빈배열인 경우 보여지는 조건이 없고, ios인 경우 ios에서 "en", "ios"이면 해당 조건에서 "dev", "stage"이면 해당조건에서만 나타납니다.
 ```

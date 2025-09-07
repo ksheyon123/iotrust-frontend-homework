@@ -78,7 +78,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# React 빌드 파일을 위한 추가 정적 파일 디렉토리
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR.parent, 'client', 'dist'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

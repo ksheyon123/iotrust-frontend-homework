@@ -1,7 +1,7 @@
 import { ApiError, ApiResponse } from "@/types/https";
 
 // SERVER END POINT URL
-const API_BASE_URL = process.env.API_BASE_URL;
+const API_BASE_URL = process.env.API_BASE_URL || "";
 
 // 기본 fetch 함수
 async function request<T>(

@@ -36,7 +36,7 @@ const Discovery = () => {
     currentLanguage: string
   ): DAppItem[] => {
     const currentPlatform = detectPlatform();
-    const currentEnv = process.env.NODE_ENV || "development";
+    const currentEnv = process.env.NODE_ENV_MODE || "development";
 
     return dapps.filter((dapp) => {
       const languageData = dapp[currentLanguage as keyof DAppItem];
