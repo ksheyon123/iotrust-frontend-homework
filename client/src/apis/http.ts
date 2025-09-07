@@ -8,7 +8,9 @@ async function request<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<ApiResponse<T>> {
-  const url = `${API_BASE_URL}${endpoint}`;
+  const url = endpoint.includes("http")
+    ? endpoint
+    : `${API_BASE_URL}${endpoint}`;
 
   const config: RequestInit = {
     headers: {

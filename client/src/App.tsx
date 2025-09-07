@@ -1,10 +1,14 @@
 import React from "react";
 import "@/index.css";
-import Test from "./pages/Test";
 import Discovery from "./pages/Discovery";
+import { LanguageContextProvider } from "./contexts/LanguageContext";
 
 const App: React.FC = () => {
-  return <Discovery />;
+  return (
+    <LanguageContextProvider>
+      <Discovery />
+    </LanguageContextProvider>
+  );
 };
 
 export default App;

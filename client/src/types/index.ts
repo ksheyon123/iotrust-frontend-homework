@@ -4,6 +4,16 @@ type LanguageObject = {
   [K in Language]: string;
 };
 
+type DefaultLngSets = {
+  dapp_favorite_title: string;
+  dapp_favorite_delete: string;
+  dapp_favorite_delete_confirm: string;
+  dapp_list_title: string;
+  go_to_dapp: string;
+  button_cancel: string;
+  button_confirm: string;
+};
+
 type BannerItem = {
   banner_url: LanguageObject;
   banner_link: LanguageObject;
