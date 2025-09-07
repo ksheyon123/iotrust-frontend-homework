@@ -105,3 +105,8 @@ docker compose -f docker-compose-prod.yml up -d --build
 - **다중 환경 지원**: local, dev, stage, prod 환경별 빌드 설정
 - **Docker 컨테이너화**: 환경별 Dockerfile 제공
 - **환경 변수 관리**: `.env` 파일을 통한 설정 관리
+
+# 제한 시간 내 구현하지 못한 부분 & 보완하고 싶은 점 등
+
+로딩 관련해서는 작업을 못했고 예외 처리는 코드/메세지/UI도 작성하지 못했습니다.
+또한, Carousel의 라이프 사이클은 AI가 준대로 작성하고 검토를 못했습니다.
