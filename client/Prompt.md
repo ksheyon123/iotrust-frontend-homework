@@ -48,5 +48,19 @@ CTA, Ghost, Icon 스타일이 존재합니다.
 ## 2.4.1 기본 구성 요청
 
 ```
+import { ReactNode } from "react";
 
+interface TitleProps<T> {
+  children: (props: T) => ReactNode;
+  data: T;
+  className? : string;
+}
+
+const Title = <T,>({ children, data, className }: TitleProps<T>) => {
+  return <div className={`${className}`}>{children(data)}</div>;
+};
+
+export default Title;
+
+Generic, RenderProps 컴포넌트로 작성했어 검토해봐
 ```
