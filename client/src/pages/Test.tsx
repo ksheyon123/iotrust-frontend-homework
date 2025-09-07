@@ -1,3 +1,4 @@
+import BottomUpModalExample from "@/components/BottomUpModal/BottomUpModalExample";
 import ButtonExample from "@/components/Button/ButtonExample";
 import CaroselExample from "@/components/Carousel/CarouselExample";
 import ListExample from "@/components/List/ListExample";
@@ -8,6 +9,7 @@ const Test = () => {
       <CaroselExample />
       <ListExample />
       <ButtonExample />
+      <BottomUpModalExample />
     </>
   );
 };
