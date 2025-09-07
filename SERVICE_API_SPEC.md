@@ -122,7 +122,7 @@
 
 ### 4.3 Banner List 요청
 
-배너 목록 요청 API 엔드포인트입니다.
+배너 목록을 조회하는 API 엔드포인트입니다. 각 배너는 한국어와 영어를 지원하는 다국어 구조로 되어 있습니다.
 
 **GET 요청**
 
@@ -138,22 +138,57 @@
   "code": 1000,
   "data": [
     {
-        "banner_url": {
-          "ko" :"...",
-          "en" : "..."
-        },
-        "banner_link":{
-          "ko" :"...",
-          "en" : "..."
-        },
-        "banner_desc": {
-          "ko" :"...",
-          "en" : "..."
-        },
-        "banner_btn_text": {
-          "ko" :"...",
-          "en" : "..."
-        },
+      "banner_url": {
+        "ko": "배너 이미지 URL (한국어)",
+        "en": "Banner image URL (English)"
+      },
+      "banner_link": {
+        "ko": "배너 클릭 시 이동할 링크 (한국어)",
+        "en": "Banner click destination link (English)"
+      },
+      "banner_desc": {
+        "ko": "배너 설명 텍스트 (한국어)",
+        "en": "Banner description text (English)"
+      },
+      "banner_btn_text": {
+        "ko": "배너 버튼 텍스트 (한국어)",
+        "en": "Banner button text (English)"
+      }
+    }
+  ]
+}
+```
+
+**응답 필드 설명**
+
+- `banner_url`: 배너 이미지의 URL 주소 (다국어 지원)
+- `banner_link`: 배너 클릭 시 이동할 대상 URL (다국어 지원)
+- `banner_desc`: 배너에 표시될 설명 텍스트 (다국어 지원)
+- `banner_btn_text`: 배너 내 버튼에 표시될 텍스트 (다국어 지원)
+
+**사용 예시**
+
+```json
+{
+  "status": 200,
+  "code": 1000,
+  "data": [
+    {
+      "banner_url": {
+        "ko": "https://example.com/banner-ko.jpg",
+        "en": "https://example.com/banner-en.jpg"
+      },
+      "banner_link": {
+        "ko": "https://example.com/promotion-ko",
+        "en": "https://example.com/promotion-en"
+      },
+      "banner_desc": {
+        "ko": "특별 프로모션 이벤트",
+        "en": "Special Promotion Event"
+      },
+      "banner_btn_text": {
+        "ko": "자세히 보기",
+        "en": "Learn More"
       }
     }
   ]

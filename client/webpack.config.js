@@ -1,8 +1,15 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
+const dotenv = require("dotenv");
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === "production";
+
+  // Load environment variables
+  const envFile = isProduction ? ".env" : ".env.local";
+  const envVars =
+    dotenv.config({ path: path.resolve(__dirname, envFile) }).parsed || {};
 
   return {
     entry: "./src/index.tsx",
@@ -49,6 +56,9 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: "./public/index.html",
         filename: "index.html",
+      }),
+      new webpack.DefinePlugin({
+        "process.env": JSON.stringify(envVars),
       }),
     ],
     devServer: {
