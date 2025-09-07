@@ -35,7 +35,17 @@ export const LanguageContext = createContext<LanguageContextType>({
 export const LanguageContextProvider = ({
   children,
 }: LanguageContextProviderProps) => {
-  const [language, setLanguage] = useState<Language>("ko");
+  const validLanguages = ["ko", "en"] as const;
+
+  const isValidLanguage = (lang: string): lang is Language => {
+    return validLanguages.includes(lang as Language);
+  };
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const lngParam = urlParams.get("lng");
+  const lng = lngParam && isValidLanguage(lngParam) ? lngParam : "ko";
+
+  const [language, setLanguage] = useState<Language>(lng);
   const [lngSets, setLngSets] = useState<DefaultLngSets>({
     dapp_favorite_title: "",
     dapp_favorite_delete: "",
