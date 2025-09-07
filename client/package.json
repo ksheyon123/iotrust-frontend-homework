@@ -5,7 +5,14 @@
   "main": "src/index.tsx",
   "scripts": {
     "dev": "webpack serve --mode development",
+    "dev:dev": "webpack serve --mode development --env ENV=dev",
+    "dev:stage": "webpack serve --mode development --env ENV=stage",
+    "dev:prod": "webpack serve --mode development --env ENV=prod",
     "build": "webpack --mode production",
+    "build:local": "webpack --mode development --env ENV=local",
+    "build:dev": "webpack --mode production --env ENV=dev",
+    "build:stage": "webpack --mode production --env ENV=stage",
+    "build:prod": "webpack --mode production --env ENV=prod",
     "type-check": "tsc --noEmit"
   },
   "keywords": [
@@ -26,6 +33,7 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "autoprefixer": "^10.4.14",
+    "copy-webpack-plugin": "^13.0.1",
     "css-loader": "^6.8.1",
     "dotenv": "^17.2.2",
     "eslint": "^8.42.0",

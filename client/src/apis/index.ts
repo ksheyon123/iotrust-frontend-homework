@@ -34,7 +34,9 @@ export const requestGetFavorites = async () => {
 
 export const requestLngSet = async (lng: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/language/${lng}.json`, {
+    // 상대 경로를 사용하여 public 폴더의 파일에 접근
+    // 빌드 시에도 정상적으로 작동하도록 수정
+    const response = await fetch(`/language/${lng}.json`, {
       headers: {
         "Content-Type": "application/json",
       },

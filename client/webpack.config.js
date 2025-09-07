@@ -2,12 +2,22 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 const dotenv = require("dotenv");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === "production";
 
+  // Determine environment file based on ENV parameter or mode
+  let envFile = ".env.local"; // default
+
+  if (env && env.ENV) {
+    // Use specific environment file when ENV is provided
+    envFile = `.env.${env.ENV}`;
+  } else if (isProduction) {
+    envFile = ".env.prod";
+  }
+
   // Load environment variables
-  const envFile = isProduction ? ".env" : ".env.local";
   const envVars =
     dotenv.config({ path: path.resolve(__dirname, envFile) }).parsed || {};
 
@@ -59,6 +69,17 @@ module.exports = (env, argv) => {
       }),
       new webpack.DefinePlugin({
         "process.env": JSON.stringify(envVars),
+      }),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: "public",
+            to: ".",
+            globOptions: {
+              ignore: ["**/index.html"], // index.html은 HtmlWebpackPlugin에서 처리하므로 제외
+            },
+          },
+        ],
       }),
     ],
     devServer: {

@@ -33,7 +33,7 @@ DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 # 이미지 베이스 URL 설정
 IMAGE_BASE_URL = os.getenv('IMAGE_BASE_URL', 'https://raw.githubusercontent.com/KyungeunKim/iotrust-frontend-homework/main/images/')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', 'server']
 
 
 # Application definition
@@ -108,6 +108,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://client:3000",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -116,6 +117,7 @@ CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://client:3000",
 ]
 
 # 시간대 설정

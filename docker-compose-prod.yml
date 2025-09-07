@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.prod
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    networks:
+      - iotrust-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "8003:8000"
+    volumes:
+      - ./server:/app
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=django-insecure-dev-key-for-docker
+      - IMAGE_BASE_URL=https://raw.githubusercontent.com/KyungeunKim/iotrust-frontend-homework/main/images/
+    networks:
+      - iotrust-network
+
+networks:
+  iotrust-network:
+    driver: bridge
