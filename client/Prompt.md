@@ -32,3 +32,7 @@ touchmove 이벤트로 Swape해서 넘길 수 있으며 우측 하단에 item의
 ```
 List 컴포넌트를 만드려고 합니다. 이떄, RenderProps 형태가 될 수 있도록 List 컴포넌트를 작성합니다.
 ```
+
+# 2.3 Button
+
+## 2.3.1 기본 구성 요청
