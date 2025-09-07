@@ -283,12 +283,12 @@ def favorite_list(request):
             "service_url": "https://opensea.io",
         },
         {
-           "service_name" : "MoonPay",
+           "title" : "MoonPay",
             "image_url": f"{settings.IMAGE_BASE_URL}icon_moonpay.png",
             "service_url": "https://buy.moonpay.com/v2/buy",
         },
         {
-            "service_name" : "Rarible - NFT Marketplace for Brands, Communities and Traders",
+            "title" : "Rarible - NFT Marketplace for Brands, Communities and Traders",
             "image_url": f"{settings.IMAGE_BASE_URL}icon_rarible.png",
             "service_url": "https://rarible.com/",
         }

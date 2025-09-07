@@ -49,3 +49,9 @@ type DAppItem = {
     condition: string[];
   };
 };
+
+type FavoriteItem = {
+  title: string;
+  image_url: string;
+  service_url: string;
+};

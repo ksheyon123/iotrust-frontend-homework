@@ -21,6 +21,17 @@ export const requestGetDApps = async () => {
   }
 };
 
+export const requestGetFavorites = async () => {
+  try {
+    const response = await http.get<FavoriteItem[]>(
+      `/api/${API_VERSION}/favorite`
+    );
+    return response;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export const requestLngSet = async (lng: string) => {
   try {
     const response = await fetch(`http://localhost:3000/language/${lng}.json`, {

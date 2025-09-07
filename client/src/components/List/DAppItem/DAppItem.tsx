@@ -1,13 +1,21 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const ListItem = (item: DAppItem) => {
+interface DAppItemProps {
+  item: DAppItem;
+  onClick?: () => void;
+}
+
+const DAppItem = ({ item, onClick }: DAppItemProps) => {
   const { currentLanguage } = useLanguage();
 
   // 현재 언어에 맞는 DApp 데이터 선택
   const localizedDApp = item[currentLanguage];
 
   return (
-    <div className="flex items-center p-4 border rounded-lg hover:bg-gray-50">
+    <div
+      className="flex items-center p-4 border rounded-lg hover:bg-gray-50"
+      onClick={onClick}
+    >
       <img
         src={localizedDApp.image_url}
         alt={localizedDApp.name}
@@ -31,18 +39,8 @@ const ListItem = (item: DAppItem) => {
           </div>
         )}
       </div>
-      {localizedDApp.service_url && (
-        <a
-          href={localizedDApp.service_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="ml-4 px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
-        >
-          Go to DApp
-        </a>
-      )}
     </div>
   );
 };
 
-export default ListItem;
+export default DAppItem;
