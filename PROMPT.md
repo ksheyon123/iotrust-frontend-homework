@@ -64,3 +64,15 @@ export default Title;
 
 Generic, RenderProps 컴포넌트로 작성했어 검토해봐
 ```
+
+# 3. 서버 환경 구축
+
+## 3.1 환경 설정 프롬프트
+
+```
+Server 쪽에 DjangoRestFramwork 환경 구축합니다. App 이름은 iotrust-server이고 React 프로젝트의 서버로도 사용하려고 합니다. 또한, DB, Authentication은 사용하지 않습니다.
+
+또한, requirements.txt를 작성합니다.
+
+Python 환경은 conda activate iotrust로 사용합니다.
+```
