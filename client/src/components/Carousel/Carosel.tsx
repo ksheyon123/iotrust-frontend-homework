@@ -4,18 +4,21 @@ interface CarouselProps {
   children: React.ReactNode[];
   timer?: number; // 자동 넘김 타이머 (milliseconds)
   className?: string;
+  onItemClick?: (index: number) => void; // 아이템 클릭 핸들러
 }
 
 const Carousel: React.FC<CarouselProps> = ({
   children,
   timer = 0,
   className = "",
+  onItemClick,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1); // 첫 번째 복사본 다음부터 시작
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [translateX, setTranslateX] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [hasDragged, setHasDragged] = useState(false); // 실제로 드래그가 발생했는지 추적
   const carouselRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -102,6 +105,7 @@ const Carousel: React.FC<CarouselProps> = ({
   const handleStart = (clientX: number) => {
     if (isAnimating) return;
     setIsDragging(true);
+    setHasDragged(false); // 드래그 시작 시 초기화
     setStartX(clientX);
     setTranslateX(0);
     stopTimer();
@@ -113,35 +117,55 @@ const Carousel: React.FC<CarouselProps> = ({
 
     const deltaX = clientX - startX;
     setTranslateX(deltaX);
+
+    // 일정 거리 이상 움직이면 드래그로 간주
+    if (Math.abs(deltaX) > 5) {
+      setHasDragged(true);
+    }
   };
 
   // 터치/마우스 끝
   const handleEnd = () => {
     if (!isDragging || isAnimating) return;
 
+    const wasDragging = isDragging;
+    const finalHasDragged = hasDragged;
+    const finalTranslateX = translateX;
+
     setIsDragging(false);
 
     const threshold = 50; // 최소 드래그 거리
     const containerWidth = carouselRef.current?.offsetWidth || 1;
-    const dragRatio = Math.abs(translateX) / containerWidth;
+    const dragRatio = Math.abs(finalTranslateX) / containerWidth;
 
-    // 드래그 거리나 비율이 충분한지 확인
-    if (dragRatio > 0.25 || Math.abs(translateX) > threshold) {
-      if (translateX > 0) {
+    // 실제로 드래그가 발생했고 충분한 거리를 움직였는지 확인
+    if (
+      finalHasDragged &&
+      (dragRatio > 0.25 || Math.abs(finalTranslateX) > threshold)
+    ) {
+      if (finalTranslateX > 0) {
         goToPrev();
       } else {
         goToNext();
       }
-    } else {
-      // 원래 자리로 돌아가는 애니메이션
+    } else if (finalHasDragged) {
+      // 드래그했지만 충분하지 않은 경우 - 원래 자리로 돌아가기
       setIsAnimating(true);
       setTimeout(() => {
         setIsAnimating(false);
         restartTimer();
       }, 300);
+    } else {
+      // 드래그하지 않은 경우 - 클릭으로 간주
+      if (onItemClick) {
+        const originalIndex = getOriginalIndex();
+        onItemClick(originalIndex);
+      }
+      restartTimer();
     }
 
     setTranslateX(0);
+    setHasDragged(false);
   };
 
   // 터치 이벤트 핸들러
@@ -263,12 +287,6 @@ const Carousel: React.FC<CarouselProps> = ({
       {/* 인덱스 표시 */}
       <div className="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm font-medium">
         {getOriginalIndex() + 1} / {totalItems}
-      </div>
-
-      {/* 디버그 정보 (개발용) */}
-      <div className="absolute top-4 left-4 bg-white bg-opacity-80 text-black px-2 py-1 rounded text-xs">
-        Current: {currentIndex} | Original: {getOriginalIndex()} | Dragging:{" "}
-        {isDragging ? "Yes" : "No"} | Animating: {isAnimating ? "Yes" : "No"}
       </div>
     </div>
   );

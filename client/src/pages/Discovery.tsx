@@ -162,9 +162,35 @@ const Discovery = () => {
   return (
     <Layout>
       <div>
-        <Carousel>
-          {bannerItems.map((item) => {
-            return <Banner {...item} />;
+        <Carousel
+          onItemClick={(index) => {
+            const bannerItem = bannerItems[index];
+            if (bannerItem) {
+              const localizedBanner = bannerItem[currentLanguage];
+              const hasButton = !!localizedBanner.banner_btn_text;
+
+              // 버튼이 없는 배너만 클릭 시 링크 열기
+              if (!hasButton) {
+                window.open(localizedBanner.banner_link);
+              }
+            }
+          }}
+        >
+          {bannerItems.map((item, index) => {
+            return (
+              <Banner
+                key={index}
+                {...item}
+                onBannerClick={() => {
+                  const localizedBanner = item[currentLanguage];
+                  const hasButton = !!localizedBanner.banner_btn_text;
+
+                  if (!hasButton) {
+                    window.open(localizedBanner.banner_link);
+                  }
+                }}
+              />
+            );
           })}
         </Carousel>
       </div>
@@ -177,7 +203,9 @@ const Discovery = () => {
         children={(item) => (
           <FavoriteItem
             item={item}
-            onClick={() => {}}
+            onClick={(item) => {
+              window.open(item.service_url);
+            }}
             onClickFavorite={(item) => onClickFavorite(item)}
             isFavorited={true}
           />

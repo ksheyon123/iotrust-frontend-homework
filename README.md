@@ -1,6 +1,7 @@
 # 사용한 기술 스택
 
 1. React / Tailwindcss / Webpack
+2. Clien(Antropic API) & Claude
 
 # 프로젝트 실행 및 빌드 방법 설명
 
@@ -104,5 +105,3 @@ docker compose -f docker-compose-prod.yml up -d --build
 - **다중 환경 지원**: local, dev, stage, prod 환경별 빌드 설정
 - **Docker 컨테이너화**: 환경별 Dockerfile 제공
 - **환경 변수 관리**: `.env` 파일을 통한 설정 관리
-
-# 제한 시간 내 구현하지 못한 부분 & 보완하고 싶은 점 등

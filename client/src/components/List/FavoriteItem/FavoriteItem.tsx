@@ -1,6 +1,6 @@
 interface FavoriteItemProps {
   item: FavoriteItem;
-  onClick?: () => void;
+  onClick?: (item: FavoriteItem) => void;
   onClickFavorite?: (item: FavoriteItem) => void;
   isFavorited?: boolean;
 }
@@ -14,7 +14,12 @@ const FavoriteItem = ({
   return (
     <div
       className="flex items-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer"
-      onClick={onClick}
+      onClick={(e) => {
+        if (onClick) {
+          e.stopPropagation();
+          onClick(item);
+        }
+      }}
     >
       <img
         src={item.image_url}
@@ -26,7 +31,12 @@ const FavoriteItem = ({
         <div>{item.service_url}</div>
       </div>
       <button
-        onClick={() => onClickFavorite && onClickFavorite(item)}
+        onClick={(e) => {
+          if (onClickFavorite) {
+            e.stopPropagation();
+            onClickFavorite(item);
+          }
+        }}
         className="ml-2 p-2 hover:bg-gray-100 rounded-full transition-colors"
         title={isFavorited ? "즐겨찾기에서 제거" : "즐겨찾기에 추가"}
       >
