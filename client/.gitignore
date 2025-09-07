@@ -1,0 +1,5 @@
+# package 의존성
+/node_modules
+
+# build package
+/dist
